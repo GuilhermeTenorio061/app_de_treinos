@@ -4,6 +4,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { LogOut, Play } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import futebolImg from "@/assets/futebol.jpg";
+import voleiImg from "@/assets/volei.jpg";
+import basqueteImg from "@/assets/basquete.jpg";
+import surfImg from "@/assets/surf.jpg";
 
 interface Sport {
   id: string;
@@ -56,14 +60,14 @@ const Dashboard = () => {
     navigate("/auth");
   };
 
-  const getSportIcon = (sportName: string) => {
-    const icons: { [key: string]: string } = {
-      'Futebol': '⚽',
-      'Vôlei': '🏐',
-      'Basquete': '🏀',
-      'Surf': '🏄'
+  const getSportImage = (sportName: string) => {
+    const images: { [key: string]: string } = {
+      'Futebol': futebolImg,
+      'Vôlei': voleiImg,
+      'Basquete': basqueteImg,
+      'Surf': surfImg
     };
-    return icons[sportName] || '🏆';
+    return images[sportName] || futebolImg;
   };
 
   if (loading) {
@@ -109,8 +113,13 @@ const Dashboard = () => {
               style={{ animationDelay: `${index * 100}ms` }}
               onClick={() => navigate(`/sports/${sport.slug}`)}
             >
-              <div className="aspect-square bg-gradient-energy flex items-center justify-center text-8xl">
-                {getSportIcon(sport.name)}
+              <div className="aspect-square relative overflow-hidden">
+                <img 
+                  src={getSportImage(sport.name)} 
+                  alt={sport.name}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               </div>
               <div className="p-6">
                 <h3 className="text-2xl font-bold mb-2 flex items-center justify-between">
