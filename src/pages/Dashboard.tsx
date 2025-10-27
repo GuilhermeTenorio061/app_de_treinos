@@ -8,6 +8,10 @@ import futebolImg from "@/assets/futebol.jpg";
 import voleiImg from "@/assets/volei.jpg";
 import basqueteImg from "@/assets/basquete.jpg";
 import surfImg from "@/assets/surf.jpg";
+import handebolImg from "@/assets/handebol.jpg";
+import tenisImg from "@/assets/tenis.jpg";
+import natacaoImg from "@/assets/natacao.jpg";
+import futsalImg from "@/assets/futsal.jpg";
 
 interface Sport {
   id: string;
@@ -65,7 +69,11 @@ const Dashboard = () => {
       'Futebol': futebolImg,
       'Vôlei': voleiImg,
       'Basquete': basqueteImg,
-      'Surf': surfImg
+      'Surf': surfImg,
+      'Handebol': handebolImg,
+      'Tênis': tenisImg,
+      'Natação': natacaoImg,
+      'Futsal': futsalImg
     };
     return images[sportName] || futebolImg;
   };
