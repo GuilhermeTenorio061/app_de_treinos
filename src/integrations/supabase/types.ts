@@ -147,6 +147,44 @@ export type Database = {
           },
         ]
       }
+      user_progress: {
+        Row: {
+          created_at: string
+          id: string
+          skill_name: string
+          sport_id: string
+          updated_at: string
+          user_id: string
+          videos_watched: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          skill_name: string
+          sport_id: string
+          updated_at?: string
+          user_id: string
+          videos_watched?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          skill_name?: string
+          sport_id?: string
+          updated_at?: string
+          user_id?: string
+          videos_watched?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_progress_sport_id_fkey"
+            columns: ["sport_id"]
+            isOneToOne: false
+            referencedRelation: "sports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       videos: {
         Row: {
           created_at: string
