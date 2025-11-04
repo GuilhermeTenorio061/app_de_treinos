@@ -10,6 +10,7 @@ import SportMenu from "./pages/SportMenu";
 import Skills from "./pages/Skills";
 import Trainers from "./pages/Trainers";
 import Video from "./pages/Video";
+import Development from "./pages/Development";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/sports/:sportSlug" element={<SportMenu />} />
           <Route path="/sports/:sportSlug/treinos" element={<Skills />} />
           <Route path="/sports/:sportSlug/treinadores" element={<Trainers />} />
+          <Route path="/sports/:sportSlug/desenvolvimento" element={<Development />} />
           <Route path="/video/:videoId" element={<Video />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

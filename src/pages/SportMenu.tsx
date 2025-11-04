@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Users, Dumbbell } from "lucide-react";
+import { ArrowLeft, Users, Dumbbell, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Sport {
@@ -102,11 +102,11 @@ const SportMenu = () => {
               O que você procura?
             </h2>
             <p className="text-xl text-muted-foreground">
-              Escolha entre treinadores especializados ou treinos em vídeo
+              Escolha entre treinadores, treinos ou acompanhe seu desenvolvimento
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Treinadores Card */}
             <div
               className="group relative bg-card rounded-2xl overflow-hidden border-2 border-border hover:border-primary transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-glow animate-scale-in"
@@ -144,6 +144,28 @@ const SportMenu = () => {
                 </p>
                 <div className="flex items-center justify-center gap-2 text-sm text-primary font-medium">
                   Ver treinos
+                  <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+              <div className="absolute inset-0 bg-gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+            </div>
+
+            {/* Desenvolvimento Card */}
+            <div
+              className="group relative bg-card rounded-2xl overflow-hidden border-2 border-border hover:border-primary transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-glow animate-scale-in"
+              style={{ animationDelay: "200ms" }}
+              onClick={() => navigate(`/sports/${sportSlug}/desenvolvimento`)}
+            >
+              <div className="p-8 text-center">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <TrendingUp className="w-10 h-10 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3">Desenvolvimento</h3>
+                <p className="text-muted-foreground mb-6">
+                  Acompanhe seu progresso e evolução em cada valência do esporte
+                </p>
+                <div className="flex items-center justify-center gap-2 text-sm text-primary font-medium">
+                  Ver progresso
                   <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>

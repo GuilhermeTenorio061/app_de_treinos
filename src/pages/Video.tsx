@@ -41,6 +41,44 @@ const Video = () => {
     loadVideo();
   }, [videoId]);
 
+  const trackProgress = async () => {
+    if (!video || !skill || !sport) return;
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // Check if progress exists
+      const { data: existing } = await supabase
+        .from("user_progress")
+        .select("*")
+        .eq("user_id", user.id)
+        .eq("sport_id", sport.id)
+        .eq("skill_name", skill.name)
+        .maybeSingle();
+
+      if (existing) {
+        // Update existing progress
+        await supabase
+          .from("user_progress")
+          .update({ videos_watched: existing.videos_watched + 1 })
+          .eq("id", existing.id);
+      } else {
+        // Create new progress
+        await supabase
+          .from("user_progress")
+          .insert({
+            user_id: user.id,
+            sport_id: sport.id,
+            skill_name: skill.name,
+            videos_watched: 1
+          });
+      }
+    } catch (error) {
+      console.error("Error tracking progress:", error);
+    }
+  };
+
   const checkAuth = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
@@ -133,6 +171,7 @@ const Video = () => {
                   controls
                   className="w-full h-full"
                   src={video.video_url}
+                  onEnded={trackProgress}
                 >
                   Seu navegador não suporta o elemento de vídeo.
                 </video>
