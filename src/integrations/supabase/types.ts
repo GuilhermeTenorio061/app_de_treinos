@@ -97,6 +97,56 @@ export type Database = {
         }
         Relationships: []
       }
+      trainers: {
+        Row: {
+          contact: string
+          created_at: string
+          description: string
+          experience_years: number | null
+          hourly_rate: number
+          id: string
+          image_url: string | null
+          name: string
+          specialties: string[] | null
+          sport_id: string
+          updated_at: string
+        }
+        Insert: {
+          contact: string
+          created_at?: string
+          description: string
+          experience_years?: number | null
+          hourly_rate: number
+          id?: string
+          image_url?: string | null
+          name: string
+          specialties?: string[] | null
+          sport_id: string
+          updated_at?: string
+        }
+        Update: {
+          contact?: string
+          created_at?: string
+          description?: string
+          experience_years?: number | null
+          hourly_rate?: number
+          id?: string
+          image_url?: string | null
+          name?: string
+          specialties?: string[] | null
+          sport_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trainers_sport_id_fkey"
+            columns: ["sport_id"]
+            isOneToOne: false
+            referencedRelation: "sports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       videos: {
         Row: {
           created_at: string

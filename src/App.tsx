@@ -6,7 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import SportMenu from "./pages/SportMenu";
 import Skills from "./pages/Skills";
+import Trainers from "./pages/Trainers";
 import Video from "./pages/Video";
 import NotFound from "./pages/NotFound";
 
@@ -22,7 +24,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/sports/:sportSlug" element={<Skills />} />
+          <Route path="/sports/:sportSlug" element={<SportMenu />} />
+          <Route path="/sports/:sportSlug/treinos" element={<Skills />} />
+          <Route path="/sports/:sportSlug/treinadores" element={<Trainers />} />
           <Route path="/video/:videoId" element={<Video />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
