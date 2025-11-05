@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Video {
@@ -33,6 +33,9 @@ const Video = () => {
   const [skill, setSkill] = useState<Skill | null>(null);
   const [sport, setSport] = useState<Sport | null>(null);
   const [loading, setLoading] = useState(true);
+  const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -128,6 +131,54 @@ const Video = () => {
     }
   };
 
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.includes('mp4')) {
+      toast({
+        title: "Formato inválido",
+        description: "Por favor, selecione um arquivo MP4",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado");
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+
+      const { error: uploadError, data } = await supabase.storage
+        .from('videos')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('videos')
+        .getPublicUrl(fileName);
+
+      setUploadedVideoUrl(publicUrl);
+      
+      toast({
+        title: "Upload realizado!",
+        description: "Seu vídeo foi carregado com sucesso",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Erro no upload",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const formatDuration = (seconds: number | null) => {
     if (!seconds) return "Duração desconhecida";
     const mins = Math.floor(seconds / 60);
@@ -165,12 +216,13 @@ const Video = () => {
         <div className="animate-fade-in">
           {/* Video Player */}
           <div className="bg-card rounded-xl overflow-hidden shadow-card mb-8">
-            <div className="aspect-video bg-muted flex items-center justify-center">
-              {video?.video_url ? (
+            <div className="aspect-video bg-muted flex items-center justify-center relative">
+              {uploadedVideoUrl || video?.video_url ? (
                 <video
                   controls
+                  controlsList="nodownload"
                   className="w-full h-full"
-                  src={video.video_url}
+                  src={uploadedVideoUrl || video.video_url}
                   onEnded={trackProgress}
                 >
                   Seu navegador não suporta o elemento de vídeo.
@@ -178,14 +230,48 @@ const Video = () => {
               ) : (
                 <div className="text-center p-8">
                   <p className="text-muted-foreground mb-4">
-                    Vídeo não disponível
+                    Nenhum vídeo carregado
                   </p>
-                  <p className="text-sm text-muted-foreground">
-                    Este é um vídeo de demonstração. Substitua a URL por um link real.
+                  <p className="text-sm text-muted-foreground mb-6">
+                    Faça upload de um arquivo MP4 para visualizar
                   </p>
+                  <Button
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    {uploading ? "Carregando..." : "Selecionar Vídeo MP4"}
+                  </Button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="video/mp4"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                  />
                 </div>
               )}
             </div>
+            {(uploadedVideoUrl || video?.video_url) && (
+              <div className="p-4 border-t border-border bg-card/50">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                >
+                  <Upload className="w-4 h-4 mr-2" />
+                  {uploading ? "Carregando..." : "Trocar Vídeo"}
+                </Button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="video/mp4"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+              </div>
+            )}
           </div>
 
           {/* Video Info */}
