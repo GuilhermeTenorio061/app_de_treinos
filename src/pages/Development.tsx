@@ -78,7 +78,7 @@ const Development = () => {
       
       const chartData = skills.map(skill => ({
         skill,
-        progress: Math.min((progressMap.get(skill) || 0) * 10, 100) // Each video = 10 points, max 100
+        progress: Math.min((progressMap.get(skill) || 0) * 5, 100) // Each video = 5%, max 100
       }));
 
       setProgress(chartData);
