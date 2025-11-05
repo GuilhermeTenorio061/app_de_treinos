@@ -45,14 +45,27 @@ const Video = () => {
   }, [videoId]);
 
   const trackProgress = async () => {
-    if (!video || !skill || !sport) return;
+    if (!video || !skill || !sport) {
+      console.log("Missing data:", { video: !!video, skill: !!skill, sport: !!sport });
+      return;
+    }
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        console.log("No user found");
+        return;
+      }
+
+      console.log("Tracking progress for:", { 
+        userId: user.id, 
+        sportId: sport.id, 
+        sportSlug: sport.slug,
+        skillName: skill.name 
+      });
 
       // Check if progress exists
-      const { data: existing } = await supabase
+      const { data: existing, error: selectError } = await supabase
         .from("user_progress")
         .select("*")
         .eq("user_id", user.id)
@@ -60,15 +73,29 @@ const Video = () => {
         .eq("skill_name", skill.name)
         .maybeSingle();
 
+      if (selectError) {
+        console.error("Error selecting progress:", selectError);
+        throw selectError;
+      }
+
+      console.log("Existing progress:", existing);
+
       if (existing) {
         // Update existing progress
-        await supabase
+        const { error: updateError } = await supabase
           .from("user_progress")
           .update({ videos_watched: existing.videos_watched + 1 })
           .eq("id", existing.id);
+
+        if (updateError) throw updateError;
+
+        toast({
+          title: "Progresso atualizado!",
+          description: `${skill.name}: ${existing.videos_watched + 1} vídeo(s) assistido(s) - ${(existing.videos_watched + 1) * 5}%`,
+        });
       } else {
         // Create new progress
-        await supabase
+        const { error: insertError } = await supabase
           .from("user_progress")
           .insert({
             user_id: user.id,
@@ -76,9 +103,21 @@ const Video = () => {
             skill_name: skill.name,
             videos_watched: 1
           });
+
+        if (insertError) throw insertError;
+
+        toast({
+          title: "Progresso iniciado!",
+          description: `${skill.name}: 1 vídeo assistido - 5%`,
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error tracking progress:", error);
+      toast({
+        title: "Erro ao rastrear progresso",
+        description: error.message,
+        variant: "destructive",
+      });
     }
   };
 
