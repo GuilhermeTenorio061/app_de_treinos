@@ -120,6 +120,11 @@ const Video = () => {
 
       if (sportError) throw sportError;
       setSport(sportData);
+
+      // Set default video if no video_url exists
+      if (!videoData.video_url && sportData.slug === 'futebol') {
+        setUploadedVideoUrl('/videos/futebol-treino.mp4');
+      }
     } catch (error: any) {
       toast({
         title: "Erro ao carregar vídeo",
