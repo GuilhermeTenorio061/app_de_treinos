@@ -121,8 +121,8 @@ const Video = () => {
       if (sportError) throw sportError;
       setSport(sportData);
 
-      // Set default video if no video_url exists
-      if (!videoData.video_url && sportData.slug === 'futebol') {
+      // Set default video for futebol sport
+      if (sportData.slug === 'futebol') {
         setUploadedVideoUrl('/videos/futebol-treino.mp4');
       }
     } catch (error: any) {
