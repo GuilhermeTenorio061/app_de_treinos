@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Dumbbell, Play, Award, TrendingUp } from "lucide-react";
+import { Play, Award, TrendingUp } from "lucide-react";
+import typusLogo from "@/assets/typus-logo.png";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -22,11 +23,11 @@ const Index = () => {
       {/* Hero Section */}
       <header className="container mx-auto px-4 py-20 text-center">
         <div className="animate-fade-in">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-energy mb-6">
-            <Dumbbell className="w-10 h-10" />
+          <div className="flex justify-center mb-6">
+            <img src={typusLogo} alt="Typus Training Logo" className="w-32 h-32 md:w-40 md:h-40" />
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-energy bg-clip-text text-transparent">
-            SportsTrain
+            Typus Training
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Aprimore suas habilidades esportivas com vídeos de treino profissionais
