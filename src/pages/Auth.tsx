@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Dumbbell } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
+import typusLogo from "@/assets/typus-logo.png";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -76,11 +77,11 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background via-background to-muted">
       <div className="w-full max-w-md">
         <div className="text-center mb-8 animate-fade-in">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-energy mb-4">
-            <Dumbbell className="w-8 h-8" />
+          <div className="flex justify-center mb-4">
+            <img src={typusLogo} alt="Typus Logo" className="w-20 h-20" />
           </div>
           <h1 className="text-4xl font-bold mb-2 bg-gradient-energy bg-clip-text text-transparent">
-            SportsTrain
+            Typus
           </h1>
           <p className="text-muted-foreground">
             Sua plataforma de treinos esportivos
