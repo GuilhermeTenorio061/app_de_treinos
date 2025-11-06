@@ -12,6 +12,7 @@ import handebolImg from "@/assets/handebol.jpg";
 import tenisImg from "@/assets/tenis.jpg";
 import natacaoImg from "@/assets/natacao.jpg";
 import futsalImg from "@/assets/futsal.jpg";
+import typusLogo from "@/assets/typus-logo.png";
 
 interface Sport {
   id: string;
@@ -93,9 +94,12 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold bg-gradient-energy bg-clip-text text-transparent">
-            SportsTrain
-          </h1>
+          <div className="flex items-center gap-3">
+            <img src={typusLogo} alt="Typus Logo" className="w-10 h-10" />
+            <h1 className="text-2xl font-bold bg-gradient-energy bg-clip-text text-transparent">
+              Typus
+            </h1>
+          </div>
           <Button variant="ghost" size="sm" onClick={handleLogout}>
             <LogOut className="w-4 h-4 mr-2" />
             Sair
