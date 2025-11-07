@@ -12,6 +12,10 @@ import handebolImg from "@/assets/handebol.jpg";
 import tenisImg from "@/assets/tenis.jpg";
 import natacaoImg from "@/assets/natacao.jpg";
 import futsalImg from "@/assets/futsal.jpg";
+import boxImg from "@/assets/box.jpg";
+import jiujitsuImg from "@/assets/jiu-jitsu.jpg";
+import futevoleiImg from "@/assets/futevolei.jpg";
+import corridaImg from "@/assets/corrida.jpg";
 import typusLogo from "@/assets/typus-logo.png";
 
 interface Sport {
@@ -74,7 +78,11 @@ const Dashboard = () => {
       'Handebol': handebolImg,
       'Tênis': tenisImg,
       'Natação': natacaoImg,
-      'Futsal': futsalImg
+      'Futsal': futsalImg,
+      'Box': boxImg,
+      'Jiu-Jitsu': jiujitsuImg,
+      'Futevôlei': futevoleiImg,
+      'Corrida': corridaImg
     };
     return images[sportName] || futebolImg;
   };
