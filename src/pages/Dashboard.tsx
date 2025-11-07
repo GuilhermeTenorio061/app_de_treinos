@@ -49,6 +49,7 @@ const Dashboard = () => {
       const { data, error } = await supabase
         .from("sports")
         .select("*")
+        .order("display_order", { ascending: true })
         .order("name");
 
       if (error) throw error;
