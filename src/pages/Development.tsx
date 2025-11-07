@@ -25,7 +25,11 @@ const SPORT_SKILLS: Record<string, string[]> = {
   handebol: ['Arremesso', 'Passe', 'Defesa', 'Movimentação', 'Físico', 'Drible'],
   tenis: ['Backhand', 'Forehand', 'Saque', 'Defesa', 'Velocidade', 'Agilidade'],
   natacao: ['Nado Crawl', 'Nado Borboleta', 'Nado de Costas', 'Nado Peito', 'Resistência', 'Fôlego'],
-  surf: ['Drop', 'Remada', 'Tubo', 'Rasgada', 'Cut Back', 'Batida', 'Duck Dive']
+  surf: ['Drop', 'Remada', 'Tubo', 'Rasgada', 'Cut Back', 'Batida', 'Duck Dive'],
+  box: ['Jab', 'Direto', 'Cruzado', 'Uppercut', 'Gancho', 'Esquiva', 'Defesa', 'Movimentação'],
+  'jiu-jitsu': ['Guarda', 'Passagem', 'Montada', 'Finalizações', 'Quedas', 'Defesa', 'Transições'],
+  futevolei: ['Ataque', 'Defesa', 'Levantamento', 'Recepção', 'Saque', 'Movimentação'],
+  corrida: ['Velocidade', 'Resistência', 'Fôlego', 'Técnica', 'Ritmo', 'Explosão']
 };
 
 const Development = () => {
