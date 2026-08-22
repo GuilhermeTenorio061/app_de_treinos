@@ -46,7 +46,7 @@ const Auth = () => {
         });
         navigate("/dashboard");
       } else {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -56,12 +56,18 @@ const Auth = () => {
         });
         if (error) throw error;
 
-        toast({
-          title: "Conta criada!",
-          description: "Faça login para começar.",
-        });
-        setIsLogin(true);
+        if (data.session) {
+          toast({ title: "Conta criada!", description: "Bem-vindo ao Typus!" });
+          navigate("/dashboard");
+        } else {
+          toast({
+            title: "Conta criada!",
+            description: "Faça login para começar.",
+          });
+          setIsLogin(true);
+        }
       }
+
     } catch (error: any) {
       toast({
         title: "Erro",
